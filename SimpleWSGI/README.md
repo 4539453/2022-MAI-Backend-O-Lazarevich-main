@@ -1,19 +1,18 @@
 # Simple WSGI
 
+![web_app](https://miro.medium.com/max/720/1*i_9gtKakG2QjgwXdFDdwRA.jpeg)
+
 - Установить nginx и gunicorn;
 - Настроить nginx для отдачи статический файлов из public/;
 - Создать простейшее WSGI-приложение и запустить его с помощью gunicorn;
 - Настроить проксирование запросов на nginx;
 - Измерить производительность nginx и gunicorn c помощью ab или wrk.
 
-![web_app](https://miro.medium.com/max/720/1*i_9gtKakG2QjgwXdFDdwRA.jpeg)
-
 ## URI
 
 **URI** — Uniform Resource Identifier
 
-![URI_syntax_diagram](https://en.wikipedia.org/wiki/File:URI_syntax_diagram.svg?sanitize=true)
-<img src="https://en.wikipedia.org/wiki/File:URI_syntax_diagram.svg?sanitize=true"/>
+![URI_syntax_diagram](https://upload.wikimedia.org/wikipedia/commons/d/d6/URI_syntax_diagram.svg)
 
 **URL** — Uniform Resource Locator
 
