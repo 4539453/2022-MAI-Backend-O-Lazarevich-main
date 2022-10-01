@@ -1,0 +1,53 @@
+sudo apt-get update
+sudo apt-get dist-upgrade
+
+sudo apt-get install wget
+wget -P /tmp https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tgz
+tar -xzvf /tmp/Python-3.10.7.tgz --directory /tmp
+# https://stackoverflow.com/questions/63084049/sslerrorcant-connect-to-https-url-because-the-ssl-module-is-not-available
+sudo apt-get install build-essential \
+    zlib1g-dev \
+    libncurses5-dev \
+    libgdbm-dev \
+    libnss3-dev \
+    libssl-dev \
+    libreadline-dev \
+    libffi-dev  
+cd /tmp/Python-3.10.7
+./configure --enable-optimizations
+nproc
+make -j 2
+sudo make altinstall
+python3.10 -V
+sudo ln -s /usr/local/bin/python3.10 /usr/local/bin/python
+python -V
+
+rm -rf venv
+python -m venv venv
+source venv/bin/activate.fish
+pip install pipenv
+cd code/2022-MAI-Backend-O-Lazarevich/
+pipenv sync
+
+cd SimpleWSGI/
+ip a
+gunicorn --bind 192.168.122.108:8000 --workers=2 app:app
+gunicorn --bind 192.168.122.108:8000 --workers=2 app:AppClass
+
+sudo apt-get install nginx
+/usr/sbin/nginx -v
+sudo systemctl enable nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
+
+cp /etc/nginx/nginx.conf .
+cp /etc/nginx/sites-available/default .
+sudo /usr/sbin/nginx -c (pwd)/nginx.conf
+sudo kill (ps aux | grep '[n]ginx' | awk '{print $2}')
+./run.sh
+
+sudo apt-get install wrk
+./run.sh &
+wrk -t12 -c400 -d30s http://192.168.122.108/public/
+wrk -t12 -c400 -d30s http://192.168.122.108:8000
+wrk -t12 -c200 -d30s http://192.168.122.108/backend/

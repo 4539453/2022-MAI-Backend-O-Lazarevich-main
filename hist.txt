@@ -1,4 +1,35 @@
-mkdir .venv
-python -m venv .venv
-source .venv/bin/activate.fish
+#!/usr/bin/fish
+
+python -m venv venv
+source venv/bin/activate.fish
 python LRUCache/test.py
+
+wget -P /tmp https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.5.0-amd64-netinst.iso
+set isopath /tmp/debian-11.5.0-amd64-netinst.iso
+set thedomain debian11
+virt-install --os-variant list | rg debian
+sudo systemctl start libvirtd
+virsh net-start default
+virsh net-list --all
+virt-install \
+    --connect qemu:///system \
+    --name $thedomain \
+    --memory 2048 \
+    --vcpus 2 \
+    --disk size=10 \
+    --location $isopath \
+    --os-variant debian11 \
+    --virt-type kvm \
+    --boot uefi \
+    --extra-args='console=tty0 console=ttyS0,115200n8' \
+    --nographics
+
+ip neigh
+ssh user@192.168.122.108
+
+source venv/bin/activate.fish
+pip install pipenv
+pipenv install gunicorn
+
+curl 192.168.122.108:8000
+curl 192.168.122.108:8000/omg
