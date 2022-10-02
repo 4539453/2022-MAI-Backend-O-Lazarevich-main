@@ -50,13 +50,13 @@ server {
 
 	server_name _;
 
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
+	# location / {
+	# 	# First attempt to serve request as file, then
+	# 	# as directory, then fall back to displaying a 404.
+	# 	try_files $uri $uri/ =404;
+	# }
 
-  location /public/ {
+  location /data/ {
     # https://nginx.org/en/docs/http/ngx_http_core_module.html#alias
     alias /home/user/code/2022-MAI-Backend-O-Lazarevich/SimpleWSGI/data/;
   }
