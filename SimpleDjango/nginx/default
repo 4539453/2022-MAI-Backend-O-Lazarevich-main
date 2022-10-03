@@ -25,7 +25,7 @@ upstream backend {
 server {
 	#listen 80 default_server;
 	#listen [::]:80 default_server;
-	listen 192.168.122.108:8080 default_server;
+	listen 192.168.122.108:80 default_server;
 
 	# SSL configuration
 	#
@@ -43,26 +43,14 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	root /var/www/html;
+	# root /var/www/html;
 
 	# Add index.php to the list if you are using PHP
-	index index.html index.htm index.nginx-debian.html;
+	# index index.html index.htm index.nginx-debian.html;
 
 	server_name _;
 
 	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
-
-  location /public/ {
-    # https://nginx.org/en/docs/http/ngx_http_core_module.html#alias
-    alias /home/user/code/2022-MAI-Backend-O-Lazarevich/SimpleWSGI/data/;
-  }
-
-  location /backend/ {
-    # https://nginx.org/en/docs/http/ngx_http_upstream_module.html#example
     proxy_pass http://backend;
   }
 
