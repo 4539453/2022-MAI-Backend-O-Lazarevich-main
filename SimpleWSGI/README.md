@@ -94,8 +94,8 @@ gunicorn [OPTIONS] [WSGI_APP]
 
 ```bash
 # nginx -> static files
-$ wrk -t12 -c400 -d30s http://192.168.122.108/public/
-Running 30s test @ http://192.168.122.108/public/
+$ wrk -t12 -c400 -d30s http://192.168.122.108/data/
+Running 30s test @ http://192.168.122.108/data/
   12 threads and 400 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
     Latency   167.95ms   65.05ms   1.97s    89.62%
@@ -105,8 +105,8 @@ Running 30s test @ http://192.168.122.108/public/
 Requests/sec:   1163.83
 Transfer/sec:    751.22KB
 
-$ wrk -t12 -c100 -d30s http://192.168.122.108/public/
-Running 30s test @ http://192.168.122.108/public/
+$ wrk -t12 -c100 -d30s http://192.168.122.108/data/
+Running 30s test @ http://192.168.122.108/data/
   12 threads and 100 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
     Latency    88.46ms  107.26ms   1.98s    97.85%
