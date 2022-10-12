@@ -48,5 +48,10 @@ cd SimpleDjango
 python manage.py runserver
 django-admin help startapp
 django-admin startapp app
-pipenv install djangorestframework
-pipenv uninstall djangorestframework
+
+# PostgreSQL
+
+ssh-keygen -t rsa
+ssh-copy-id user@192.168.122.108
+
+pipenv install psycopg2-binary

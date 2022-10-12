@@ -61,4 +61,39 @@ wrk -t12 -c200 -d30s http://192.168.122.108/backend/
 # https://serverfault.com/questions/22414/how-can-i-run-debian-stable-but-install-some-packages-from-testing
 sudo apt-get -t testing install nginx
 /usr/sbin/nginx -v
+cd SimpleDjango
 ./run.sh
+
+# PostgreSQL
+
+sudo apt-get install postgresql postgresql-client
+
+sudo systemctl start postgresql@13-main
+systemctl  status postgresql@13-main.service
+
+sudo -i -u postgres
+psql
+exit
+
+cd PostgreSQL
+
+set file init.sql
+cat $file | sudo -u postgres psql
+
+psql -U filmadmin -h 127.0.0.1 films
+
+set file tables.sql
+cat $file | psql -U filmadmin -h 127.0.0.1 films
+set file data.sql
+cat $file | psql -U filmadmin -h 127.0.0.1 films
+set file drop.sql
+cat $file | sudo -u postgres psql
+
+set file init.sql
+cat $file | sudo -u postgres psql
+
+cd ../SimpleDjango/
+./manage.py makemigrations
+./manage.py showmigrations
+./manage.py migrate
+./manage.py showmigrations
