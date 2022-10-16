@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 # to be able to POST to this view from clients that won't have a CSRF token
 @csrf_exempt
-def book(request: HttpRequest) -> JsonResponse:
+def film(request: HttpRequest) -> JsonResponse:
     if request.method == "GET":
         return JsonResponse({"title": "Title"}, status=200)
     elif request.method == "POST":
