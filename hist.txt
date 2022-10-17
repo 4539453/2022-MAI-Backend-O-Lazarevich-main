@@ -55,3 +55,8 @@ ssh-keygen -t rsa
 ssh-copy-id user@192.168.122.108
 
 pipenv install psycopg2-binary
+
+# Docker
+
+ln -rsf Pipfile ./SimpleDjango/Pipfile
+ln -rsf Pipfile.lock ./SimpleDjango/Pipfile.lock

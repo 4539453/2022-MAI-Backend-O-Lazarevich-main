@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    build:
+      context: PostgreSQL
+      dockerfile: Dockerfile
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "films"
+      POSTGRES_USER: "filmadmin"
+      POSTGRES_PASSWORD: "P@ssword"
+    volumes:
+      - ./data/postgres:/var/lib/posgresql/data
+
+    networks:
+      - app-network
+
+    ports:
+      - "5432:5432"
+
+    restart: always
+
+  nginx:
+    build:
+      context: Nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    
+    restart: always
+
+    # volumes:
+    #   - ./nginx/content:/home
+
+    ports:
+      - "80:80"
+
+    networks:
+      - app-network
+
+  django:
+    build:
+      context: SimpleDjango
+      dockerfile: Dockerfile
+    container_name: django
+    environment:
+      POSTGRES_NAME: films
+      POSTGRES_USER: filmadmin
+      POSTGRES_PASSWORD: P@ssword
+      POSTGRES_HOST: postgres
+
+    restart: always
+
+    volumes:
+      - .:/code
+
+    ports:
+      - "8000:8000"
+
+    networks:
+      - app-network
+
+    depends_on:
+      - postgres
+    
+    command: sh -c "python3 SimpleDjango/manage.py migrate &&
+                    python3 SimpleDjango/manage.py runserver 0.0.0.0:8000"
+
+    # command: sh -c "python3 SimpleDjango/manage.py migrate &&
+    #                 python3 SimpleDjango/manage.py shell < script.py &&
+    #                 python3 SimpleDjango/manage.py runserver 0.0.0.0:8000"
+
+networks:
+  app-network:
+    driver: "bridge"
